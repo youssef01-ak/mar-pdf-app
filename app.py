@@ -13,25 +13,17 @@ st.markdown(
     @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
 
     .stApp {
-        background: linear-gradient(135deg, #FFB6C1, #E6E6FA, #FFB6C1);
-        background-attachment: fixed;
-        background-size: cover;
+        background: linear-gradient(135deg, #FFB6C1, #E6E6FA, #FFB6C1) !important;
+        background-attachment: fixed !important;
         font-family: 'Quicksand', sans-serif;
     }
 
-    /* PINK TRANSPARENT UPLOADER */
+    /* FORCE PINK TRANSPARENT UPLOADER */
     [data-testid="stFileUploadDropzone"] {
-        background: rgba(255, 182, 193, 0.45) !important;
+        background: rgba(255, 182, 193, 0.55) !important;
         border: 2px dashed #FF69B4 !important;
         border-radius: 16px !important;
         backdrop-filter: blur(8px) !important;
-        position: relative !important;
-        overflow: visible !important;
-        transition: background 0.3s ease !important;
-    }
-
-    [data-testid="stFileUploadDropzone"]:hover {
-        background: rgba(255, 105, 180, 0.35) !important;
     }
 
     [data-testid="stFileUploadDropzone"] * {
@@ -40,6 +32,7 @@ st.markdown(
 
     [data-testid="stFileUploadDropzone"] svg {
         fill: #FF1493 !important;
+        color: #FF1493 !important;
     }
 
     [data-testid="stFileUploadDropzone"] button {
@@ -49,60 +42,45 @@ st.markdown(
         border-radius: 8px !important;
     }
 
-    [data-testid="stFileUploadDropzone"] button:hover {
-        background-color: #FF69B4 !important;
-        color: white !important;
-    }
-
-    /* CAT CONTAINER — sits on top of the uploader */
-    .cat-wrapper {
+    /* CAT SITTING ON THE BOX */
+    .cat-on-box {
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 40px;
+        margin-bottom: -18px;   /* pulls cat DOWN to sit on the box edge */
         position: relative;
-        width: 100%;
-    }
-
-    .jumping-cat {
-        position: absolute;
-        top: -60px;
-        right: 30px;
-        font-size: 2.4rem;
-        animation: catJump 1.2s ease-in-out infinite;
         z-index: 9999;
-        filter: drop-shadow(0 4px 6px rgba(255,20,147,0.3));
         pointer-events: none;
-        user-select: none;
     }
 
-    @keyframes catJump {
-        0%   { transform: translateY(0px) rotate(-5deg); }
-        30%  { transform: translateY(-28px) rotate(5deg); }
-        50%  { transform: translateY(-38px) rotate(0deg); }
-        70%  { transform: translateY(-28px) rotate(-3deg); }
-        100% { transform: translateY(0px) rotate(-5deg); }
+    .cat-emoji {
+        font-size: 2.2rem;
+        animation: catTail 2s ease-in-out infinite;
+        display: inline-block;
+        filter: drop-shadow(0 2px 4px rgba(255,20,147,0.25));
     }
 
-    /* DATAFRAME */
-    [data-testid="stDataFrame"], [data-testid="stDataEditor"] {
-        background-color: rgba(255, 240, 245, 0.7) !important;
-        border-radius: 12px !important;
+    @keyframes catTail {
+        0%   { transform: rotate(-4deg); }
+        50%  { transform: rotate(4deg); }
+        100% { transform: rotate(-4deg); }
     }
 
-    [data-testid="stDataFrame"] div, [data-testid="stDataFrame"] span {
+    h1, h2, h3, p { color: #5a0030 !important; }
+
+    [data-testid="stDataFrame"] div,
+    [data-testid="stDataFrame"] span {
         color: black !important;
-    }
-
-    h1, h2, h3, p {
-        color: #5a0030 !important;
     }
     </style>
 
-    <!-- Jumping cat riding above the uploader -->
-    <div style="position:relative; height:0;">
-      <div class="jumping-cat">🐱</div>
+    <!-- Cat sits right on top of the upload box -->
+    <div class="cat-on-box">
+      <span class="cat-emoji">🐱</span>
     </div>
     """,
     unsafe_allow_html=True
 )
-
 # App Content
 st.title("🌸 Mariam's App: PDF to Excel Extractor")
 st.write("Welcome, Mariam! 🌿 Upload your pharmacy studies PDF to instantly extract tables and search through data.")
