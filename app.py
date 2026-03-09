@@ -17,62 +17,81 @@ st.markdown(
         font-family: 'Quicksand', sans-serif;
     }
 
-    [data-testid="stFileUploadDropzone"] {
-        background: rgba(255, 182, 193, 0.55) !important;
+    /* NUCLEAR OPTION - force every possible uploader selector */
+    [data-testid="stFileUploadDropzone"],
+    [data-testid="stFileUploadDropzone"] > div,
+    section[data-testid="stFileUploadDropzone"],
+    .stFileUploader > div,
+    .uploadedFile,
+    div[class*="uploadDropzone"],
+    div[class*="FileUpload"] {
+        background-color: rgba(255, 182, 193, 0.7) !important;
+        background: rgba(255, 182, 193, 0.7) !important;
         border: 2px dashed #FF69B4 !important;
         border-radius: 16px !important;
+        color: #5a0030 !important;
     }
-    [data-testid="stFileUploadDropzone"] * { color: #5a0030 !important; }
-    [data-testid="stFileUploadDropzone"] svg { fill: #FF1493 !important; }
-    [data-testid="stFileUploadDropzone"] button {
-        background-color: rgba(255,105,180,0.3) !important;
+
+    /* Force ALL text inside uploader pink/dark */
+    [data-testid="stFileUploadDropzone"] *,
+    [data-testid="stFileUploadDropzone"] p,
+    [data-testid="stFileUploadDropzone"] span,
+    [data-testid="stFileUploadDropzone"] small {
+        color: #5a0030 !important;
+        background: transparent !important;
+    }
+
+    /* Force icon color */
+    [data-testid="stFileUploadDropzone"] svg,
+    [data-testid="stFileUploadDropzone"] svg path {
+        fill: #FF1493 !important;
+        stroke: #FF1493 !important;
+        color: #FF1493 !important;
+    }
+
+    /* Browse files button */
+    [data-testid="stFileUploadDropzone"] button,
+    [data-testid="stBaseButton-secondary"] {
+        background-color: rgba(255,105,180,0.4) !important;
         color: #5a0030 !important;
         border: 1px solid #FF69B4 !important;
         border-radius: 8px !important;
     }
 
-    h1, h2, h3, p { color: #5a0030 !important; }
+    h1, h2, h3, p, label { color: #5a0030 !important; }
 
-    /* ---- WALKING CAT ACROSS THE BOX ---- */
+    /* WALKING CAT */
     .cat-walk-container {
         position: relative;
         width: 100%;
         height: 40px;
-        margin-bottom: -12px;   /* sit right on top of the box */
+        margin-bottom: -12px;
         overflow: hidden;
         z-index: 9999;
         pointer-events: none;
     }
-
     .walking-cat {
         position: absolute;
         font-size: 2rem;
         bottom: 0px;
-        animation: walkAcross 30s linear infinite;
-        white-space: nowrap;
+        animation: walkAcross 12s linear infinite;
     }
-
-    /* flips direction mid-walk so cat always faces forward */
     @keyframes walkAcross {
-        0%   { left: -60px;   transform: scaleX(1);  }
-        49%  { left: 103%;    transform: scaleX(1);  }
-        50%  { left: 103%;    transform: scaleX(-1); }
-        100% { left: -60px;   transform: scaleX(-1); }
+        0%   { left: -60px;  transform: scaleX(1);  }
+        49%  { left: 103%;   transform: scaleX(1);  }
+        50%  { left: 103%;   transform: scaleX(-1); }
+        100% { left: -60px;  transform: scaleX(-1); }
     }
-
-    /* little legs wobble */
     .walking-cat span {
         display: inline-block;
-        animation: wobble 0.3s ease-in-out infinite alternate;
+        animation: wobble 0.4s ease-in-out infinite alternate;
     }
-
     @keyframes wobble {
-        0%   { transform: translateY(0px);  }
+        0%   { transform: translateY(0px); }
         100% { transform: translateY(-4px); }
     }
     </style>
 
-    <!-- Walking cat sits right on the upload box edge -->
     <div class="cat-walk-container">
       <div class="walking-cat"><span>🐱</span></div>
     </div>
