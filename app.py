@@ -3,10 +3,10 @@ import pdfplumber
 import pandas as pd
 import io
 
-# Set up a wider layout for better table viewing
-st.set_page_config(page_title="PDF to Excel Extractor", layout="wide")
-st.title("📄 PDF to Excel Extractor")
-st.write("Upload a PDF, preview it interactively, and download a fully searchable Excel file.")
+# Set up the layout and title for Mariam
+st.set_page_config(page_title="Mariam's App", layout="wide")
+st.title("🌸 Mariam's App: PDF to Excel Extractor")
+st.write("Welcome, Mariam! Upload a PDF to extract its tables, view the full data, and search for specific names.")
 
 # 1. File Uploader
 uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
@@ -30,22 +30,37 @@ if uploaded_file is not None:
             df = pd.DataFrame(all_data[1:], columns=all_data[0])
             st.success("Extraction complete!")
             
-            # 4. Interactive Preview
-            # st.dataframe natively allows users to click, scroll, and search inside the app!
-            st.subheader("Interactive Data Preview")
+            # 4. Show the Full Extracted Data First
+            st.subheader("Extracted Data")
             st.dataframe(df, use_container_width=True)
             
-            # 5. Prepare EXCEL for Download
-            # We use a memory buffer so we don't have to save a physical file to your hard drive first
+            # --- 5. SEARCH BAR (Just after showing the data) ---
+            st.subheader("🔍 Search by Name")
+            search_query = st.text_input("Type a name to search the table:")
+            
+            # Filter the DataFrame if Mariam types something
+            if search_query:
+                # Scans all columns for the specific name, ignoring capitalization
+                mask = df.astype(str).apply(lambda x: x.str.contains(search_query, case=False, na=False)).any(axis=1)
+                filtered_df = df[mask]
+                st.write(f"**Found {len(filtered_df)} matching rows for '{search_query}'.**")
+                
+                # Show the filtered results
+                st.dataframe(filtered_df, use_container_width=True)
+            else:
+                # If the search bar is empty, prepare to download the full table
+                filtered_df = df
+            
+            # 6. Prepare EXCEL for Download
             buffer = io.BytesIO()
             with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
-                df.to_excel(writer, index=False, sheet_name='Extracted Data')
+                filtered_df.to_excel(writer, index=False, sheet_name='Mariams Data')
             
-            # Download Button for the Excel file
+            # Download Button (Saves the searched data, or full data if no search was made)
             st.download_button(
-                label="📥 Download as Excel (.xlsx)",
+                label="📥 Download Excel File",
                 data=buffer.getvalue(),
-                file_name="extracted_tables.xlsx",
+                file_name="Mariams_Extracted_Data.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
         else:
