@@ -3,57 +3,68 @@ import pdfplumber
 import pandas as pd
 import io
 
-# 1. Custom Function for Girly Background and Flower Title
-def add_girly_theme():
-    st.markdown(
-        f"""
-        <style>
-        /* Applies a girly pastel gradient to the entire app */
-        .stApp {{
-            background: linear-gradient(135deg, #FFB6C1, #E6E6FA, #FFB6C1); /* Pink to Lilac gradient */
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-        }}
-        
-        /* Creates the solid white container so tables are easy to read */
-        .main .block-container {{
-            background-color: rgba(255, 255, 255, 0.95); /* 95% solid white */
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            margin-top: 2rem;
-            margin-bottom: 2rem;
-        }}
-        
-        /* FORCES ALL TEXT TO BE BLACK */
-        h1, h2, h3, h4, p, label, div, span, li {{
-            color: black !important;
-        }}
-        
-        /* Highlights the file uploader box in a soft pink */
-        .stFileUploader {{
-            border: 2px dashed #FF69B4 !important; /* Pink border */
-            border-radius: 5px;
-            padding: 10px;
-            background-color: #f9f9f9 !important;
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
-# 2. Page Configuration (using a flower icon here too)
+# 1. Page Configuration (keeps the flower icon)
 st.set_page_config(page_title="Mariam's Flower App", layout="wide", page_icon="🌸")
 
-# 3. Apply the custom theme (no photo required)
-add_girly_theme()
+# 2. Add custom CSS for background and making all boxes pink
+st.markdown(
+    """
+    <style>
+    /* Gradient background for the whole page */
+    .stApp {
+        background: linear-gradient(135deg, #FFB6C1, #E6E6FA, #FFB6C1); /* Pink to Lilac gradient */
+        background-attachment: fixed;
+        background-size: cover;
+    }
+    
+    /* Target the file uploader box to make it pink */
+    [data-testid="stFileUploaderContainer"] {
+        border: 2px dashed #FF69B4 !important; /* Dotted pink border */
+        border-radius: 5px;
+        padding: 10px;
+        background-color: #FF69B4 !important; /* Bright pink interior */
+    }
 
-# App Content with added flower icon
+    /* Target all text inside the file uploader and make it white */
+    [data-testid="stFileUploaderContainer"] * {
+        color: white !important;
+    }
+
+    /* Target the 'Browse files' button inside and make it clear with a white border */
+    [data-testid="stFileUploaderContainer"] button {
+        background-color: transparent !important;
+        border: 2px solid white !important;
+        color: white !important;
+    }
+
+    /* Target the data table that appears later and make it pink */
+    [data-testid="stDataFrame"] {
+        background-color: #FFB6C1 !important; /* Lighter pink background for data table */
+    }
+    
+    /* Target text elements within the dataframe to ensure black text */
+    [data-testid="stDataFrame"] div, [data-testid="stDataFrame"] span, [data-testid="stDataFrame"] a {
+        color: black !important;
+    }
+
+    /* Target other data display containers if needed */
+    [data-testid="stDataEditor"] {
+        background-color: #FFB6C1 !important; /* Lighter pink background for other data tables */
+    }
+    [data-testid="stDataEditor"] * {
+        color: black !important;
+    }
+    
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# App Content with flower icon
 st.title("🌸 Mariam's App: PDF to Excel Extractor")
 st.write("Welcome, Mariam! 🌿 Upload your pharmacy studies PDF to instantly extract tables and search through data.")
 
-# 4. File Uploader
+# 3. File Uploader
 uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
 
 if uploaded_file is not None:
@@ -62,24 +73,24 @@ if uploaded_file is not None:
     all_data = []
     
     try:
-        # 5. Extract Data
+        # 4. Extract Data
         with pdfplumber.open(uploaded_file) as pdf:
             for page in pdf.pages:
                 table = page.extract_table()
                 if table:
                     all_data.extend(table)
                     
-        # 6. Process Data
+        # 5. Process Data
         if all_data:
             # Create the DataFrame
             df = pd.DataFrame(all_data[1:], columns=all_data[0])
             st.success("Extraction complete! 💐")
             
-            # 7. Show the Full Extracted Data
+            # 6. Show the Full Extracted Data
             st.subheader("📋 Full Extracted Table")
             st.dataframe(df, use_container_width=True)
             
-            # 8. SEARCH BAR
+            # 7. SEARCH BAR
             st.subheader("🔍 Search by Name or Ingredient")
             search_query = st.text_input("Type here to search (e.g., 'Paracetamol'):")
             
@@ -92,7 +103,7 @@ if uploaded_file is not None:
             else:
                 filtered_df = df
             
-            # 9. Prepare EXCEL for Download
+            # 8. Prepare EXCEL for Download
             buffer = io.BytesIO()
             with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
                 filtered_df.to_excel(writer, index=False, sheet_name='Mariams Data')
