@@ -47,9 +47,8 @@ st.set_page_config(page_title="Mariam's App", layout="wide", page_icon="💊")
 # --- 3. APPLY THE THEME ---
 # Mariam can change this URL to any pharmacy photo she prefers.
 # I have provided a free-to-use photo of medicines in a pharmacy.
-pharmacy_bg_url = "https://images.unsplash.com/photo-1631549916718-41b8265b4486?q=80&w=2000"
+pharmacy_bg_url = "https://images.unsplash.com/photo-1576602976047-174e57a47881?q=80&w=2000"
 add_pharmacy_theme(pharmacy_bg_url)
-
 
 st.title("💊 Mariam's App: PDF to Excel Extractor")
 st.write("Welcome, Mariam! Upload your pharmacy studies PDF to instantly extract tables and search through data.")
