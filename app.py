@@ -3,14 +3,14 @@ import pdfplumber
 import pandas as pd
 import io
 
-# 1. Custom Function for Background and Black Text
-def add_pharmacy_theme(url):
+# 1. Custom Function for Girly Background and Flower Title
+def add_girly_theme():
     st.markdown(
         f"""
         <style>
-        /* Applies the background image to the entire app */
+        /* Applies a girly pastel gradient to the entire app */
         .stApp {{
-            background-image: url("{url}");
+            background: linear-gradient(135deg, #FFB6C1, #E6E6FA, #FFB6C1); /* Pink to Lilac gradient */
             background-attachment: fixed;
             background-size: cover;
             background-position: center;
@@ -31,9 +31,9 @@ def add_pharmacy_theme(url):
             color: black !important;
         }}
         
-        /* Highlights the file uploader box in a pharmacy green */
+        /* Highlights the file uploader box in a soft pink */
         .stFileUploader {{
-            border: 2px dashed #4CAF50 !important;
+            border: 2px dashed #FF69B4 !important; /* Pink border */
             border-radius: 5px;
             padding: 10px;
             background-color: #f9f9f9 !important;
@@ -43,16 +43,15 @@ def add_pharmacy_theme(url):
         unsafe_allow_html=True
     )
 
-# 2. Page Configuration
-st.set_page_config(page_title="Mariam's App", layout="wide", page_icon="💊")
+# 2. Page Configuration (using a flower icon here too)
+st.set_page_config(page_title="Mariam's Flower App", layout="wide", page_icon="🌸")
 
-# 3. Apply the specific image you provided
-pharmacy_bg_url = "https://www.mul.edu.pk/images/faculties/pharmacy_29.jpg"
-add_pharmacy_theme(pharmacy_bg_url)
+# 3. Apply the custom theme (no photo required)
+add_girly_theme()
 
-# App Content
-st.title("💊 Mariam's App: PDF to Excel Extractor")
-st.write("Welcome, Mariam! Upload your pharmacy studies PDF to instantly extract tables and search through data.")
+# App Content with added flower icon
+st.title("🌸 Mariam's App: PDF to Excel Extractor")
+st.write("Welcome, Mariam! 🌿 Upload your pharmacy studies PDF to instantly extract tables and search through data.")
 
 # 4. File Uploader
 uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
@@ -74,7 +73,7 @@ if uploaded_file is not None:
         if all_data:
             # Create the DataFrame
             df = pd.DataFrame(all_data[1:], columns=all_data[0])
-            st.success("Extraction complete!")
+            st.success("Extraction complete! 💐")
             
             # 7. Show the Full Extracted Data
             st.subheader("📋 Full Extracted Table")
