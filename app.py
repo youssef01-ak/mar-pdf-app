@@ -14,27 +14,16 @@ st.markdown(
 
     .stApp {
         background: linear-gradient(135deg, #FFB6C1, #E6E6FA, #FFB6C1) !important;
-        background-attachment: fixed !important;
         font-family: 'Quicksand', sans-serif;
     }
 
-    /* FORCE PINK TRANSPARENT UPLOADER */
     [data-testid="stFileUploadDropzone"] {
         background: rgba(255, 182, 193, 0.55) !important;
         border: 2px dashed #FF69B4 !important;
         border-radius: 16px !important;
-        backdrop-filter: blur(8px) !important;
     }
-
-    [data-testid="stFileUploadDropzone"] * {
-        color: #5a0030 !important;
-    }
-
-    [data-testid="stFileUploadDropzone"] svg {
-        fill: #FF1493 !important;
-        color: #FF1493 !important;
-    }
-
+    [data-testid="stFileUploadDropzone"] * { color: #5a0030 !important; }
+    [data-testid="stFileUploadDropzone"] svg { fill: #FF1493 !important; }
     [data-testid="stFileUploadDropzone"] button {
         background-color: rgba(255,105,180,0.3) !important;
         color: #5a0030 !important;
@@ -42,41 +31,50 @@ st.markdown(
         border-radius: 8px !important;
     }
 
-    /* CAT SITTING ON THE BOX */
-    .cat-on-box {
-        display: flex;
-        justify-content: flex-end;
-        padding-right: 40px;
-        margin-bottom: -18px;   /* pulls cat DOWN to sit on the box edge */
+    h1, h2, h3, p { color: #5a0030 !important; }
+
+    /* ---- WALKING CAT ACROSS THE BOX ---- */
+    .cat-walk-container {
         position: relative;
+        width: 100%;
+        height: 40px;
+        margin-bottom: -12px;   /* sit right on top of the box */
+        overflow: hidden;
         z-index: 9999;
         pointer-events: none;
     }
 
-    .cat-emoji {
-        font-size: 2.2rem;
-        animation: catTail 2s ease-in-out infinite;
+    .walking-cat {
+        position: absolute;
+        font-size: 2rem;
+        bottom: 0px;
+        animation: walkAcross 5s linear infinite;
+        white-space: nowrap;
+    }
+
+    /* flips direction mid-walk so cat always faces forward */
+    @keyframes walkAcross {
+        0%   { left: -60px;   transform: scaleX(1);  }
+        49%  { left: 103%;    transform: scaleX(1);  }
+        50%  { left: 103%;    transform: scaleX(-1); }
+        100% { left: -60px;   transform: scaleX(-1); }
+    }
+
+    /* little legs wobble */
+    .walking-cat span {
         display: inline-block;
-        filter: drop-shadow(0 2px 4px rgba(255,20,147,0.25));
+        animation: wobble 0.3s ease-in-out infinite alternate;
     }
 
-    @keyframes catTail {
-        0%   { transform: rotate(-4deg); }
-        50%  { transform: rotate(4deg); }
-        100% { transform: rotate(-4deg); }
-    }
-
-    h1, h2, h3, p { color: #5a0030 !important; }
-
-    [data-testid="stDataFrame"] div,
-    [data-testid="stDataFrame"] span {
-        color: black !important;
+    @keyframes wobble {
+        0%   { transform: translateY(0px);  }
+        100% { transform: translateY(-4px); }
     }
     </style>
 
-    <!-- Cat sits right on top of the upload box -->
-    <div class="cat-on-box">
-      <span class="cat-emoji">🐱</span>
+    <!-- Walking cat sits right on the upload box edge -->
+    <div class="cat-walk-container">
+      <div class="walking-cat"><span>🐱</span></div>
     </div>
     """,
     unsafe_allow_html=True
