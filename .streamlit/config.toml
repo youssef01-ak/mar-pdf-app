@@ -4,13 +4,3 @@ primaryColor = "#FF69B4"
 backgroundColor = "#FFB6C1"
 secondaryBackgroundColor = "#FFE4E1"
 textColor = "#5a0030"
-```
-4. Click **"Commit changes"**
-
-GitHub will automatically create the `.streamlit/` folder for you! Your repo will then look like:
-```
-mar-pdf-app/
-├── app.py
-├── requirements.txt
-└── .streamlit/
-    └── config.toml   ✅
