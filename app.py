@@ -48,7 +48,7 @@ st.markdown(
         position: absolute;
         font-size: 2rem;
         bottom: 0px;
-        animation: walkAcross 5s linear infinite;
+        animation: walkAcross 30s linear infinite;
         white-space: nowrap;
     }
 
