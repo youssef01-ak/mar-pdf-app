@@ -10,58 +10,95 @@ st.set_page_config(page_title="Mariam's Flower App", layout="wide", page_icon="�
 st.markdown(
     """
     <style>
-    /* Gradient background for the whole page */
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
+
     .stApp {
-        background: linear-gradient(135deg, #FFB6C1, #E6E6FA, #FFB6C1); /* Pink to Lilac */
+        background: linear-gradient(135deg, #FFB6C1, #E6E6FA, #FFB6C1);
         background-attachment: fixed;
         background-size: cover;
+        font-family: 'Quicksand', sans-serif;
     }
-    
-    /* TARGET THE INNER UPLOAD DROPZONE TO BE PINK */
+
+    /* PINK TRANSPARENT UPLOADER */
     [data-testid="stFileUploadDropzone"] {
-        background-color: #FFB6C1 !important; /* Soft pink background */
-        border: 2px dashed #FF1493 !important; /* Deeper pink border */
-        border-radius: 10px;
+        background: rgba(255, 182, 193, 0.45) !important;
+        border: 2px dashed #FF69B4 !important;
+        border-radius: 16px !important;
+        backdrop-filter: blur(8px) !important;
+        position: relative !important;
+        overflow: visible !important;
+        transition: background 0.3s ease !important;
     }
 
-    /* FORCE ALL TEXT INSIDE THE UPLOADER TO BE BLACK */
+    [data-testid="stFileUploadDropzone"]:hover {
+        background: rgba(255, 105, 180, 0.35) !important;
+    }
+
     [data-testid="stFileUploadDropzone"] * {
-        color: black !important;
+        color: #5a0030 !important;
     }
 
-    /* FORCE THE CLOUD ICON TO BE BLACK */
     [data-testid="stFileUploadDropzone"] svg {
-        fill: black !important;
-        color: black !important;
+        fill: #FF1493 !important;
     }
 
-    /* FIX THE "BROWSE FILES" BUTTON */
     [data-testid="stFileUploadDropzone"] button {
-        background-color: transparent !important;
-        color: black !important;
-        border: 1px solid black !important;
-    }
-    [data-testid="stFileUploadDropzone"] button:hover {
-        background-color: #FF69B4 !important; /* Hot pink when hovering */
-        color: white !important;
+        background-color: rgba(255,105,180,0.3) !important;
+        color: #5a0030 !important;
         border: 1px solid #FF69B4 !important;
+        border-radius: 8px !important;
     }
 
-    /* Target the data table that appears later */
+    [data-testid="stFileUploadDropzone"] button:hover {
+        background-color: #FF69B4 !important;
+        color: white !important;
+    }
+
+    /* CAT CONTAINER — sits on top of the uploader */
+    .cat-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    .jumping-cat {
+        position: absolute;
+        top: -60px;
+        right: 30px;
+        font-size: 2.4rem;
+        animation: catJump 1.2s ease-in-out infinite;
+        z-index: 9999;
+        filter: drop-shadow(0 4px 6px rgba(255,20,147,0.3));
+        pointer-events: none;
+        user-select: none;
+    }
+
+    @keyframes catJump {
+        0%   { transform: translateY(0px) rotate(-5deg); }
+        30%  { transform: translateY(-28px) rotate(5deg); }
+        50%  { transform: translateY(-38px) rotate(0deg); }
+        70%  { transform: translateY(-28px) rotate(-3deg); }
+        100% { transform: translateY(0px) rotate(-5deg); }
+    }
+
+    /* DATAFRAME */
     [data-testid="stDataFrame"], [data-testid="stDataEditor"] {
-        background-color: #FFF0F5 !important; /* Very light pink/white background for data */
+        background-color: rgba(255, 240, 245, 0.7) !important;
+        border-radius: 12px !important;
     }
-    
-    /* Target text elements within the dataframe to ensure black text */
-    [data-testid="stDataFrame"] div, [data-testid="stDataFrame"] span, [data-testid="stDataFrame"] a {
+
+    [data-testid="stDataFrame"] div, [data-testid="stDataFrame"] span {
         color: black !important;
     }
-    
-    /* Ensure main headers are black */
+
     h1, h2, h3, p {
-        color: black !important;
+        color: #5a0030 !important;
     }
     </style>
+
+    <!-- Jumping cat riding above the uploader -->
+    <div style="position:relative; height:0;">
+      <div class="jumping-cat">🐱</div>
+    </div>
     """,
     unsafe_allow_html=True
 )
