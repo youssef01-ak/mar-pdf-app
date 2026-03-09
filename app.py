@@ -3,64 +3,70 @@ import pdfplumber
 import pandas as pd
 import io
 
-# 1. Page Configuration (keeps the flower icon)
+# 1. Page Configuration
 st.set_page_config(page_title="Mariam's Flower App", layout="wide", page_icon="🌸")
 
-# 2. Add custom CSS for background and making all boxes pink
+# 2. Add custom CSS to force the uploader box to be pink and text black
 st.markdown(
     """
     <style>
     /* Gradient background for the whole page */
     .stApp {
-        background: linear-gradient(135deg, #FFB6C1, #E6E6FA, #FFB6C1); /* Pink to Lilac gradient */
+        background: linear-gradient(135deg, #FFB6C1, #E6E6FA, #FFB6C1); /* Pink to Lilac */
         background-attachment: fixed;
         background-size: cover;
     }
     
-    /* Target the file uploader box to make it pink */
-    [data-testid="stFileUploaderContainer"] {
-        border: 2px dashed #FF69B4 !important; /* Dotted pink border */
-        border-radius: 5px;
-        padding: 10px;
-        background-color: #FF69B4 !important; /* Bright pink interior */
+    /* TARGET THE INNER UPLOAD DROPZONE TO BE PINK */
+    [data-testid="stFileUploadDropzone"] {
+        background-color: #FFB6C1 !important; /* Soft pink background */
+        border: 2px dashed #FF1493 !important; /* Deeper pink border */
+        border-radius: 10px;
     }
 
-    /* Target all text inside the file uploader and make it white */
-    [data-testid="stFileUploaderContainer"] * {
-        color: white !important;
+    /* FORCE ALL TEXT INSIDE THE UPLOADER TO BE BLACK */
+    [data-testid="stFileUploadDropzone"] * {
+        color: black !important;
     }
 
-    /* Target the 'Browse files' button inside and make it clear with a white border */
-    [data-testid="stFileUploaderContainer"] button {
+    /* FORCE THE CLOUD ICON TO BE BLACK */
+    [data-testid="stFileUploadDropzone"] svg {
+        fill: black !important;
+        color: black !important;
+    }
+
+    /* FIX THE "BROWSE FILES" BUTTON */
+    [data-testid="stFileUploadDropzone"] button {
         background-color: transparent !important;
-        border: 2px solid white !important;
+        color: black !important;
+        border: 1px solid black !important;
+    }
+    [data-testid="stFileUploadDropzone"] button:hover {
+        background-color: #FF69B4 !important; /* Hot pink when hovering */
         color: white !important;
+        border: 1px solid #FF69B4 !important;
     }
 
-    /* Target the data table that appears later and make it pink */
-    [data-testid="stDataFrame"] {
-        background-color: #FFB6C1 !important; /* Lighter pink background for data table */
+    /* Target the data table that appears later */
+    [data-testid="stDataFrame"], [data-testid="stDataEditor"] {
+        background-color: #FFF0F5 !important; /* Very light pink/white background for data */
     }
     
     /* Target text elements within the dataframe to ensure black text */
     [data-testid="stDataFrame"] div, [data-testid="stDataFrame"] span, [data-testid="stDataFrame"] a {
         color: black !important;
     }
-
-    /* Target other data display containers if needed */
-    [data-testid="stDataEditor"] {
-        background-color: #FFB6C1 !important; /* Lighter pink background for other data tables */
-    }
-    [data-testid="stDataEditor"] * {
+    
+    /* Ensure main headers are black */
+    h1, h2, h3, p {
         color: black !important;
     }
-    
     </style>
     """,
     unsafe_allow_html=True
 )
 
-# App Content with flower icon
+# App Content
 st.title("🌸 Mariam's App: PDF to Excel Extractor")
 st.write("Welcome, Mariam! 🌿 Upload your pharmacy studies PDF to instantly extract tables and search through data.")
 
@@ -119,4 +125,4 @@ if uploaded_file is not None:
             st.warning("No tables could be found in this PDF. Please check if it's a scanned image.")
             
     except Exception as e:
-        st.error(f"An error occurred during extraction. Make sure the PDF layout is supported. Error details: {e}")
+        st.error(f"An error occurred during extraction. Error details: {e}")
